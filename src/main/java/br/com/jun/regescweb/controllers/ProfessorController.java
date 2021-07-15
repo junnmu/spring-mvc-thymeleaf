@@ -6,10 +6,12 @@ import br.com.jun.regescweb.models.StatusProfessor;
 import br.com.jun.regescweb.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -26,24 +28,25 @@ public class ProfessorController {
         return mv;
     }
 
-    @GetMapping("/professor/new")
-    public ModelAndView nnew() {
+    @GetMapping("/professores/new")
+    public ModelAndView nnew(RequisicaoNovoProfessor requisicao) {
         ModelAndView mv = new ModelAndView("professores/new");
-        mv.addObject("statusProfessor", StatusProfessor.values());
+        mv.addObject("listaStatusProfessor", StatusProfessor.values());
         return mv;
     }
 
     @PostMapping("/professores")
-    public String create(RequisicaoNovoProfessor requisicao) {
-        Professor professor = requisicao.toProfessor();
-        System.out.println();
-        System.out.println(requisicao);
-        System.out.println();
-        System.out.println(professor);
-        System.out.println();
-
-        professorRepository.save(professor);
-
-        return "redirect:/professores";
+    public ModelAndView create(@Valid RequisicaoNovoProfessor requisicao, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("\n************************* ERRO *****************************");
+            ModelAndView mv = new ModelAndView("professores/new");
+            mv.addObject("listaStatusProfessor", StatusProfessor.values());
+            return mv;
+        }
+        else {
+            Professor professor = requisicao.toProfessor();
+            professorRepository.save(professor);
+            return new ModelAndView("redirect:/professores");
+        }
     }
 }

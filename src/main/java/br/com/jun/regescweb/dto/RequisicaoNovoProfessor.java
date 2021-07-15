@@ -3,10 +3,17 @@ package br.com.jun.regescweb.dto;
 import br.com.jun.regescweb.models.Professor;
 import br.com.jun.regescweb.models.StatusProfessor;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class RequisicaoNovoProfessor {
+    @NotBlank
+    @NotNull
     private String name;
+    @NotNull
+    @DecimalMin("0.0")
     private BigDecimal salario;
     private StatusProfessor statusProfessor;
 
