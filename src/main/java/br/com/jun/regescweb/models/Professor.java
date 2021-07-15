@@ -56,4 +56,14 @@ public class Professor {
     public void setStatusProfessor(StatusProfessor statusProfessor) {
         this.statusProfessor = statusProfessor;
     }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salario=" + salario +
+                ", statusProfessor=" + statusProfessor +
+                '}';
+    }
 }
