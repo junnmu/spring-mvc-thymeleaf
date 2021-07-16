@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public class RequisicaoNovoProfessor {
+public class RequisicaoFormProfessor {
     @NotBlank
     @NotNull
     private String name;
@@ -48,6 +48,19 @@ public class RequisicaoNovoProfessor {
         professor.setStatusProfessor(this.statusProfessor);
 
         return professor;
+    }
+
+    public Professor toProfessor(Professor professor) {
+        professor.setName(this.name);
+        professor.setSalario(this.salario);
+        professor.setStatusProfessor(this.statusProfessor);
+        return professor;
+    }
+
+    public void fromProfessor(Professor professor) {
+        this.name = professor.getName();
+        this.salario = professor.getSalario();
+        this.statusProfessor = professor.getStatusProfessor();
     }
 
     @Override
